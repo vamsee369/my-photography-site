@@ -1,2 +1,2 @@
-web: gunicorn photogrpahy.wsgi
+web: gunicorn photography.wsgi
 
