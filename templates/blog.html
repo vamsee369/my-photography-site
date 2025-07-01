@@ -64,17 +64,10 @@
 
         <div class="post">
             <h2 class="post-title">{{ post.title }}</h2>
+
             <div class="post-date">Posted on {{ post.created_at|date:"F j, Y" }}</div>
-
-            {% if post.image %}
-            <div style="margin: 15px 0;">
-                <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 10px;">
-            </div>
-            {% endif %}
-
             <div class="post-content">{{ post.content|linebreaks }}</div>
         </div>
-
         {% empty %}
         <p>No blog posts yet. Come back later!</p>
         {% endfor %}

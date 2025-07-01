@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'nature_photography'
-    'cloudinary',
-    'cloudinary_storage',
 
 ]
 
@@ -143,12 +141,3 @@ DATABASES['default'] = dj_database_url.config(
     conn_max_age=600,
     ssl_require=False
 )
-# settings.py
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'daubwvao0',
-    'API_KEY': '242457455637479',
-    'API_SECRET': '41rqYas28vQv7tctT-zKdm3MbCQ',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
