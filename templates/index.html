@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My World</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <!-- Navbar End -->
+
+    <header>
+        <h1>📷 Welcome to My World 🌍</h1>
+
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>About Me</h2>
+            <p>---> Hi, I’m Vamsee — a passionate photographer and avid traveler who finds joy in capturing the beauty
+                of
+                everyday moments and distant landscapes. Through my lens, I tell stories that reflect nature, culture,
+                and the emotions of the journey. Whether it's a quiet village scene or a breathtaking mountain view, I
+                love freezing memories that inspire. Join me as I explore the world, one frame at a time. More blog and
+                posts are coming soon!</p>
+            <p>---> 🏠👨‍👩‍👧‍👦🌳Thotada, my peaceful village, rests gracefully on the banks of the River Nagavali,
+                where nature
+                speaks in
+                silence and beauty flows endlessly. The river winds through lush green fields, reflecting the sky and
+                the rhythm of village life. Early mornings here are filled with golden light shimmering on the water,
+                while evenings bring soft breezes and the sound of birds returning home. The landscapes are simple yet
+                stunning — bamboo groves, coconut trees, and narrow muddy paths that lead to hidden gems along the
+                river. Every corner holds a memory, a story, and a perfect frame waiting to be captured. The charm of
+                Thotada and the grace of the Nagavali continue to inspire my journey as a photographer.
+
+            </p>
+        </section>
+
+        <section class="highlight">
+            <h2>Explore</h2>
+            <div class="cards">
+                <a href="photography/" class="card">📸 Village Photography</a>
+                <a href="travel/" class="card">🚗 Next Travel Plans</a>
+                <a href="blog" class="card">📝 Blog</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🌍 Capturing Moments | Telling Stories 📸✨</p>
+    </footer>
+</body>
+
+</html>
