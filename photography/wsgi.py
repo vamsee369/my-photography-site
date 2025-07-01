@@ -1,5 +1,5 @@
 """
-WSGI config for photogrpahy project.
+WSGI config for photography project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
