@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My World</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
@@ -19,6 +19,8 @@
                 <li><a href="{% url 'photography' %}">Photography</a></li>
                 <li><a href="{% url 'travel' %}">Travel</a></li>
                 <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+
             </ul>
         </nav>
 
@@ -58,6 +60,9 @@
                 <a href="photography/" class="card">📸 Village Photography</a>
                 <a href="travel/" class="card">🚗 Next Travel Plans</a>
                 <a href="blog" class="card">📝 Blog</a>
+                <a href="{% url 'contact' %}" class="card">📬Contact</a>
+
+
             </div>
         </section>
     </main>

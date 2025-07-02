@@ -1,5 +1,6 @@
+from .forms import ContactForm
 from .models import BlogPost
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def home(request):
@@ -17,3 +18,15 @@ def travel(request):
 def blog(request):
     posts = BlogPost.objects.all().order_by('-created_at')
     return render(request, 'blog.html', {'posts': posts})
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('contact')  # Optionally show success message
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})

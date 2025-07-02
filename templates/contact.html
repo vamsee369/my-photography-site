@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Me</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .contact-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-input {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .contact-container button {
+            padding: 10px 50px;
+            font-size: 18px;
+            background-color: #347c90;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+        .contact-container button:hover {
+            background-color: #19c02c;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header>
+        <h1>🙋You Can Contact Me Here</h1>
+    </header>
+
+    <div class="contact-container">
+        <h2>Contact Me 📬</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.name }}
+            {{ form.email }}
+            {{ form.message }}
+            <button type="submit">Submit</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 30px; color: #333;">
+            📸 You can also reach me on Instagram:
+            <a href="https://www.instagram.com/vamseetandra?igsh=ZGJhMzJuc2tmNnlj" target="_blank"
+                style="color: #347c90; text-decoration: underline;">
+                @vamseetandra
+            </a>
+        </p>
+    </div>
+
+    <footer>
+        <p>🚀Join With Us In The Travel Plans 🤝</p>
+    </footer>
+</body>
+
+</html>
