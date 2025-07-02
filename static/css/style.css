@@ -134,3 +134,36 @@ h2.post-title:hover {
     /* Hover color */
     cursor: pointer;
 }
+
+.success-message {
+    max-width: 600px;
+    margin: 30px auto 50px auto;
+    padding: 15px 20px;
+    background-color: rgba(0, 255, 128, 0.12);
+    color: #ccffcc;
+    border: 1.5px solid #00ff88;
+    border-radius: 10px;
+    box-shadow: 0 0 12px #00ff88;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    animation: bounceIn 0.6s ease-out;
+    backdrop-filter: blur(6px);
+}
+
+/* Animated pop effect */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.03);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

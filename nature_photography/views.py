@@ -1,6 +1,7 @@
 from .forms import ContactForm
 from .models import BlogPost
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 def home(request):
@@ -25,6 +26,8 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(
+                request, '📩 Your message has been sent successfully!')
             return redirect('contact')  # Optionally show success message
     else:
         form = ContactForm()

@@ -33,7 +33,7 @@
         }
 
         .contact-container button {
-            padding: 10px 50px;
+            padding: 10px 20px;
             font-size: 18px;
             background-color: #347c90;
             color: white;
@@ -42,7 +42,6 @@
             cursor: pointer;
             display: block;
             margin: 0 auto;
-
         }
 
         .contact-container button:hover {
@@ -64,6 +63,13 @@
             </ul>
         </nav>
     </header>
+    {% if messages %}
+    <div class="success-message">
+        {% for message in messages %}
+        ✅ {{ message }} 🎉
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <header>
         <h1>🙋You Can Contact Me Here</h1>
@@ -77,7 +83,7 @@
             {{ form.name }}
             {{ form.email }}
             {{ form.message }}
-            <button type="submit">Submit</button>
+            <button type="submit">Send</button>
         </form>
 
         <p style="text-align: center; margin-top: 30px; color: #333;">
