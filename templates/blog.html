@@ -39,6 +39,8 @@
 </head>
 
 <body>
+    <button id="theme-toggle-btn">🌙</button>
+
     <!-- Navbar Start -->
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
@@ -77,6 +79,36 @@
     <footer>
         <p style="text-align: center; padding: 15px;">✨ Traveling, Framing, Living – 2025</p>
     </footer>
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                if (btn) btn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                if (btn) btn.textContent = '🌙';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -11,25 +11,26 @@
         .contact-container {
             max-width: 600px;
             margin: 100px auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 60px;
+            background-color: #221f1f4a;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.144);
             border-radius: 12px;
         }
 
         .contact-container h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #ffffff;
         }
 
         .form-input {
             margin-bottom: 15px;
             padding: 10px;
-            font-size: 16px;
+            font-size: 18px;
             border-radius: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #ffffff;
             width: 100%;
+
         }
 
         .contact-container button {
@@ -51,6 +52,8 @@
 </head>
 
 <body>
+    <button id="theme-toggle-btn">🌙</button>
+
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
         <nav>
@@ -79,6 +82,7 @@
         <h2>Contact Me 📬</h2>
         <form method="post">
             {% csrf_token %}
+
             {{ form.non_field_errors }}
             {{ form.name }}
             {{ form.email }}
@@ -86,10 +90,10 @@
             <button type="submit">Send</button>
         </form>
 
-        <p style="text-align: center; margin-top: 30px; color: #333;">
+        <p style="text-align: center; margin-top: 30px; color: #ffffff;">
             📸 You can also reach me on Instagram:
             <a href="https://www.instagram.com/vamseetandra?igsh=ZGJhMzJuc2tmNnlj" target="_blank"
-                style="color: #347c90; text-decoration: underline;">
+                style="color: #00fbff; text-decoration: underline;">
                 @vamseetandra
             </a>
         </p>
@@ -98,6 +102,37 @@
     <footer>
         <p>🚀Join With Us In The Travel Plans 🤝</p>
     </footer>
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                if (btn) btn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                if (btn) btn.textContent = '🌙';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        }
+    </script>
+
 </body>
 
 </html>

@@ -29,6 +29,7 @@
 
     <header>
         <h1>📷 Welcome to My World 🌍</h1>
+        <button id="theme-toggle-btn">🌙</button>
 
     </header>
 
@@ -70,6 +71,39 @@
     <footer>
         <p>🌍 Capturing Moments | Telling Stories 📸✨</p>
     </footer>
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // On page load
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        // On button click
+        btn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+    </script>
+
+
 </body>
 
 </html>
