@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+
     <style>
         .travel-container {
             max-width: 1000px;
@@ -50,6 +53,24 @@
         nav a:hover {
             text-decoration: underline;
         }
+
+        .music-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .music-controls button {
+            font-size: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 0 6px;
+        }
+
+        .music-controls button:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 
@@ -68,54 +89,58 @@
                 <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
         </nav>
-
     </header>
     <!-- Navbar End -->
 
     <header>
         <h1>🚗 My Travel Plans</h1>
 
+        <!-- 🎵 Music Controls -->
+        <div class="music-controls">
+            <button id="music-toggle-btn" onclick="toggleMusic()" title="Play/Pause Music">⏯️</button>
+            <button onclick="playFromStart()" title="Start From Beginning">🔁</button>
+        </div>
+
+        <audio id="bg-music" loop>
+            <source src="{% static 'audio/background.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </header>
 
     <div class="travel-container">
         <h2 class="travel-title">Explore My Next Travel Plan</h2>
 
+        <!-- Day 1–10 Entries (unchanged) -->
         <div class="day-entry">
             <h3 class="day-title">Day 1 – 🌄 Wheels Roll South – The Journey Begins</h3>
             <p>🚗 Kickstart the adventure from home, loaded with excitement and supplies.</p>
             <img src="{% static 'images/travel/day1.jpg' %}" alt="Day 1">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 2 – 🌳Forest Trails & Campfire Tales</h3>
             <p>🏕️ Camp in a scenic forest spot, cook your first outdoor meal, and share stories.</p>
             <img src="{% static 'images/travel/day2.jpg' %}" alt="Day 2">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 3 – 🌊Coastal Curves & Breeze Drives</h3>
             <p>🛣️ Drive along coastal roads, soak in ocean views, and stop by hidden beaches.</p>
             <img src="{% static 'images/travel/day3.jpg' %}" alt="Day 3">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 4 – 🏞️Hills, Hairpins & Hiking Boots</h3>
             <p>🥾 Explore hilly terrain or nature trails, capturing lush landscapes.</p>
             <img src="{% static 'images/travel/day4.jpg' %}" alt="Day 4">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 5 – 🛕Temples, Traditions & Twilight Skies</h3>
             <p>🙏 Visit ancient temples en route and enjoy a peaceful sunset.</p>
             <img src="{% static 'images/travel/day5.jpg' %}" alt="Day 5">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 6 – 📍Hello Kanyakumari – Touching the Tip</h3>
             <p>🌅 Arrive at the southernmost point of India — enjoy the majestic sunset view.</p>
             <img src="{% static 'images/travel/day6.jpg' %}" alt="Day 6">
         </div>
-
         <div class="day-entry">
             <h3 class="day-title">Day 7 – 🌅Sunrise Over Three Seas</h3>
             <p>📸 Witness the magical sunrise at Vivekananda Rock & Thiruvalluvar Statue.</p>
@@ -136,12 +161,13 @@
             <p>📖 After The 3 Places of Day 10, Return home with hearts full of stories and SD cards full of photos.</p>
             <img src="{% static 'images/travel/day10.jpg' %}" alt="Day 10">
         </div>
-
     </div>
 
     <footer>
         <p style="text-align: center; padding: 15px;">🌿 Capturing life, one frame at a time ✨</p>
     </footer>
+
+    <!-- Theme Toggle Script -->
     <script>
         const btn = document.getElementById('theme-toggle-btn');
         const body = document.body;
@@ -153,11 +179,11 @@
             if (theme === 'dark') {
                 body.classList.add('dark-mode');
                 body.style.backgroundImage = darkBg;
-                if (btn) btn.textContent = '☀️';
+                btn.textContent = '☀️';
             } else {
                 body.classList.remove('dark-mode');
                 body.style.backgroundImage = lightBg;
-                if (btn) btn.textContent = '🌙';
+                btn.textContent = '🌙';
             }
             localStorage.setItem('theme', theme);
         }
@@ -165,13 +191,39 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         applyTheme(savedTheme);
 
-        if (btn) {
-            btn.addEventListener('click', () => {
-                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
-                applyTheme(newTheme);
-            });
-        }
+        btn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
     </script>
+
+    <!-- Music Script -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const toggleBtn = document.getElementById('music-toggle-btn');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleBtn.innerText = '⏸️';
+            } else {
+                music.pause();
+                toggleBtn.innerText = '⏯️';
+            }
+        }
+
+        function playFromStart() {
+            music.currentTime = 0;
+            music.play();
+            toggleBtn.innerText = '⏸️';
+        }
+
+        // Set initial icon
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleBtn.innerText = '⏯️';
+        });
+    </script>
+
 </body>
 
 </html>
