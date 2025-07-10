@@ -54,22 +54,30 @@
             text-decoration: underline;
         }
 
+
+
         .music-controls {
-            text-align: center;
-            margin-top: 10px;
+            position: relative;
+            top: -50px;
+            right: 0;
+            gap: 10px;
+            justify-content: end;
+            text-align: end;
         }
 
         .music-controls button {
-            font-size: 20px;
-            background: none;
+            background-color: #00ffe1;
             border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
-            margin: 0 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
         }
 
         .music-controls button:hover {
-            transform: scale(1.2);
+            background-color: #00ccbb;
         }
     </style>
 </head>
@@ -95,10 +103,10 @@
     <header>
         <h1>🚗 My Travel Plans</h1>
 
-        <!-- 🎵 Music Controls -->
+        <!-- 🎵 Music Controls (Updated Box Buttons) -->
         <div class="music-controls">
-            <button id="music-toggle-btn" onclick="toggleMusic()" title="Play/Pause Music">⏯️</button>
-            <button onclick="playFromStart()" title="Start From Beginning">🔁</button>
+            <button onclick="toggleMusic()">Play/Pause</button>
+            <button onclick="playFromStart()">Start Over</button>
         </div>
 
         <audio id="bg-music" loop>

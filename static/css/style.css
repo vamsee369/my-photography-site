@@ -267,3 +267,63 @@ body.dark-mode .card:hover {
     color: #00ccff;
     /* white shadow for dark bg */
 }
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links li a {
+        display: block;
+        width: 100%;
+        padding: 8px 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+    }
+
+    .nav-links li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #00ffff;
+    }
+
+    header,
+    .intro,
+    main {
+        padding-left: 15px;
+        padding-right: 15px;
+        text-align: center;
+    }
+
+    main p {
+        font-size: 1rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 300px;
+    }
+}
