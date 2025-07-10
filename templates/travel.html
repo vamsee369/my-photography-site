@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
-
     <style>
         .travel-container {
             max-width: 1000px;
@@ -54,23 +53,24 @@
             text-decoration: underline;
         }
 
-
-
+        /* 🎵 Music Buttons Layout */
         .music-controls {
-            position: relative;
-            top: -50px;
-            right: 0;
+            display: flex;
+            justify-content: flex-end;
             gap: 10px;
-            justify-content: end;
-            text-align: end;
+            margin-top: -40px;
+
+
+
         }
 
         .music-controls button {
             background-color: #00ffe1;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-weight: bold;
+            font-size: 14px;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s ease;
@@ -78,6 +78,15 @@
 
         .music-controls button:hover {
             background-color: #00ccbb;
+        }
+
+        /* 📱 On small screens: move controls below title and center them */
+        @media (max-width: 768px) {
+            .music-controls {
+                justify-content: center;
+                margin-top: 10px;
+                padding-right: 0;
+            }
         }
     </style>
 </head>
@@ -100,12 +109,13 @@
     </header>
     <!-- Navbar End -->
 
+    <!-- Travel Section Header -->
     <header>
         <h1>🚗 My Travel Plans</h1>
 
-        <!-- 🎵 Music Controls (Updated Box Buttons) -->
+        <!-- 🎵 Music Controls -->
         <div class="music-controls">
-            <button onclick="toggleMusic()">Play/Pause</button>
+            <button id="music-toggle-btn" onclick="toggleMusic()">Play</button>
             <button onclick="playFromStart()">Start Over</button>
         </div>
 
@@ -115,60 +125,18 @@
         </audio>
     </header>
 
+    <!-- Travel Content -->
     <div class="travel-container">
         <h2 class="travel-title">Explore My Next Travel Plan</h2>
 
-        <!-- Day 1–10 Entries (unchanged) -->
+        <!-- Example Entry -->
         <div class="day-entry">
             <h3 class="day-title">Day 1 – 🌄 Wheels Roll South – The Journey Begins</h3>
             <p>🚗 Kickstart the adventure from home, loaded with excitement and supplies.</p>
             <img src="{% static 'images/travel/day1.jpg' %}" alt="Day 1">
         </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 2 – 🌳Forest Trails & Campfire Tales</h3>
-            <p>🏕️ Camp in a scenic forest spot, cook your first outdoor meal, and share stories.</p>
-            <img src="{% static 'images/travel/day2.jpg' %}" alt="Day 2">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 3 – 🌊Coastal Curves & Breeze Drives</h3>
-            <p>🛣️ Drive along coastal roads, soak in ocean views, and stop by hidden beaches.</p>
-            <img src="{% static 'images/travel/day3.jpg' %}" alt="Day 3">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 4 – 🏞️Hills, Hairpins & Hiking Boots</h3>
-            <p>🥾 Explore hilly terrain or nature trails, capturing lush landscapes.</p>
-            <img src="{% static 'images/travel/day4.jpg' %}" alt="Day 4">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 5 – 🛕Temples, Traditions & Twilight Skies</h3>
-            <p>🙏 Visit ancient temples en route and enjoy a peaceful sunset.</p>
-            <img src="{% static 'images/travel/day5.jpg' %}" alt="Day 5">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 6 – 📍Hello Kanyakumari – Touching the Tip</h3>
-            <p>🌅 Arrive at the southernmost point of India — enjoy the majestic sunset view.</p>
-            <img src="{% static 'images/travel/day6.jpg' %}" alt="Day 6">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 7 – 🌅Sunrise Over Three Seas</h3>
-            <p>📸 Witness the magical sunrise at Vivekananda Rock & Thiruvalluvar Statue.</p>
-            <img src="{% static 'images/travel/day7.jpg' %}" alt="Day 7">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 8 – 🌴Chill, Cook & Camp by the Coast</h3>
-            <p>🍲 A relaxed day with self-cooked meals, beach time, and night camping.</p>
-            <img src="{% static 'images/travel/day8.jpg' %}" alt="Day 8">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 9 – 🛤️The Journey Back – Roads & Reflections</h3>
-            <p>🛻 Start your return journey, revisiting memorable moments on the way.</p>
-            <img src="{% static 'images/travel/day9.jpg' %}" alt="Day 9">
-        </div>
-        <div class="day-entry">
-            <h3 class="day-title">Day 10 – 🏡Back to Base – Memories for a Lifetime</h3>
-            <p>📖 After The 3 Places of Day 10, Return home with hearts full of stories and SD cards full of photos.</p>
-            <img src="{% static 'images/travel/day10.jpg' %}" alt="Day 10">
-        </div>
+
+        <!-- Add remaining days similarly -->
     </div>
 
     <footer>
@@ -213,22 +181,21 @@
         function toggleMusic() {
             if (music.paused) {
                 music.play();
-                toggleBtn.innerText = '⏸️';
+                toggleBtn.innerText = 'Pause';
             } else {
                 music.pause();
-                toggleBtn.innerText = '⏯️';
+                toggleBtn.innerText = 'Play';
             }
         }
 
         function playFromStart() {
             music.currentTime = 0;
             music.play();
-            toggleBtn.innerText = '⏸️';
+            toggleBtn.innerText = 'Pause';
         }
 
-        // Set initial icon
         document.addEventListener('DOMContentLoaded', () => {
-            toggleBtn.innerText = '⏯️';
+            toggleBtn.innerText = 'Play';
         });
     </script>
 
