@@ -59,6 +59,8 @@
 </head>
 
 <body>
+    <!-- 🎵 Background Music -->
+    <audio id="bg-music" src="{% static 'audio/music.mp3' %}" autoplay loop muted></audio>
     <button id="theme-toggle-btn">🌙</button>
 
     <!-- Navbar Start -->
@@ -137,6 +139,26 @@
             });
         }
     </script>
+
+    <!-- 🎵 Unmute and Play Music on First Interaction (click, scroll, or keypress) -->
+    <script>
+        const music = document.getElementById('bg-music');
+
+        function enableMusic() {
+            music.muted = false;
+            music.play().catch(() => { /* ignore autoplay errors */ });
+
+            // Remove listeners after first interaction
+            window.removeEventListener('click', enableMusic);
+            window.removeEventListener('scroll', enableMusic);
+            window.removeEventListener('keydown', enableMusic);
+        }
+
+        window.addEventListener('click', enableMusic, { once: true });
+        window.addEventListener('scroll', enableMusic, { once: true });
+        window.addEventListener('keydown', enableMusic, { once: true });
+    </script>
+
 </body>
 
 </html>
