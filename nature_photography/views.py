@@ -12,19 +12,23 @@ def home(request):
     return render(request, 'index.html')
 
 
+@login_required(login_url='/accounts/login/')
 def photography(request):
     return render(request, 'photography.html')
 
 
+@login_required(login_url='/accounts/login/')
 def travel(request):
     return render(request, 'travel.html')
 
 
+@login_required(login_url='/accounts/login/')
 def blog(request):
     posts = BlogPost.objects.all().order_by('-created_at')
     return render(request, 'blog.html', {'posts': posts})
 
 
+@login_required(login_url='/accounts/login/')
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
