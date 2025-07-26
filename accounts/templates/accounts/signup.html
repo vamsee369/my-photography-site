@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_navbar.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <style>
+        .auth-container {
+            max-width: 420px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: rgba(33, 33, 33, 0.85);
+            color: white;
+            border-radius: 12px;
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .auth-container form input,
+        .auth-container form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .auth-container button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .auth-container button:hover {
+            background-color: #008fa1;
+        }
+
+        .auth-container p {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="theme-toggle-btn">🌙</button>
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+    <div class="auth-container">
+        <h2>📝 Create Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Send OTP</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // On page load
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        // On button click
+        btn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+    </script>
+</body>
+
+</html>
