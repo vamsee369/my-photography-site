@@ -54,7 +54,7 @@
 
 <body>
     <!-- 🎵 Background Music -->
-    <audio id="bg-music" src="{% static 'audio/music.mp3' %}" autoplay loop muted></audio>
+    <audio id="bg-music" src="{% static 'audio/music1.m4a' %}" autoplay loop muted></audio>
     <button id="theme-toggle-btn">🌙</button>
 
     <header class="navbar">
@@ -80,6 +80,7 @@
         {% endfor %}
     </div>
     {% endif %}
+    <canvas id="waveform" width="600" height="60" style="display: block; margin: 20px auto;"></canvas>
 
     <div class="contact-container">
         <h2>Contact Me 📬</h2>
@@ -153,7 +154,77 @@
         window.addEventListener('scroll', enableMusic, { once: true });
         window.addEventListener('keydown', enableMusic, { once: true });
     </script>
+    <script>
+        const audio = document.getElementById('bg-music');
+        const canvas = document.getElementById('waveform');
+        const ctx = canvas.getContext('2d');
 
+        let audioContext, analyser, source, dataArray, bufferLength;
+
+        function setupSingleLineVisualizer() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+
+            bufferLength = analyser.fftSize;
+            dataArray = new Uint8Array(bufferLength);
+
+            source = audioContext.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+        }
+
+        function drawSingleLineWaveform() {
+            requestAnimationFrame(drawSingleLineWaveform);
+
+            analyser.getByteTimeDomainData(dataArray);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(0, 255, 180, 1)';
+            ctx.beginPath();
+
+            const sliceWidth = canvas.width * 1.0 / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = canvas.height / 2 + (v - 1.0) * 25; // adjust amplitude here
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            ctx.stroke();
+        }
+
+        function startSingleLineVisualizer() {
+            if (!audioContext) setupSingleLineVisualizer();
+
+            const wait = setInterval(() => {
+                if (audio.currentTime > 0 && !audio.paused) {
+                    clearInterval(wait);
+                    drawSingleLineWaveform();
+                }
+            }, 100);
+        }
+
+        function unlockAudioAndStart() {
+            audio.muted = false;
+            audio.play().catch(() => { });
+            startSingleLineVisualizer();
+        }
+
+        window.addEventListener('click', unlockAudioAndStart, { once: true });
+        window.addEventListener('scroll', unlockAudioAndStart, { once: true });
+        window.addEventListener('keydown', unlockAudioAndStart, { once: true });
+    </script>
 </body>
 
 </html>
