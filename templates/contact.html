@@ -80,7 +80,7 @@
         {% endfor %}
     </div>
     {% endif %}
-    <canvas id="waveform" width="600" height="60" style="display: block; margin: 20px auto;"></canvas>
+    <canvas id="waveform" style="display: block; margin: 20px auto; width: 100%; height: 60px;"></canvas>
 
     <div class="contact-container">
         <h2>Contact Me 📬</h2>
@@ -161,7 +161,22 @@
 
         let audioContext, analyser, source, dataArray, bufferLength;
 
-        function setupSingleLineVisualizer() {
+        function resizeCanvas() {
+            // Support high-DPI screens
+            const dpr = window.devicePixelRatio || 1;
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Initial setup
+
+        function setupResponsiveVisualizer() {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 2048;
@@ -174,23 +189,25 @@
             analyser.connect(audioContext.destination);
         }
 
-        function drawSingleLineWaveform() {
-            requestAnimationFrame(drawSingleLineWaveform);
-
+        function drawResponsiveWaveform() {
+            requestAnimationFrame(drawResponsiveWaveform);
             analyser.getByteTimeDomainData(dataArray);
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
             ctx.strokeStyle = 'rgba(0, 255, 180, 1)';
             ctx.beginPath();
 
-            const sliceWidth = canvas.width * 1.0 / bufferLength;
+            const sliceWidth = width / bufferLength;
             let x = 0;
 
             for (let i = 0; i < bufferLength; i++) {
                 const v = dataArray[i] / 128.0;
-                const y = canvas.height / 2 + (v - 1.0) * 25; // adjust amplitude here
+                const y = height / 2 + (v - 1.0) * (height / 2 - 5);
 
                 if (i === 0) {
                     ctx.moveTo(x, y);
@@ -204,27 +221,28 @@
             ctx.stroke();
         }
 
-        function startSingleLineVisualizer() {
-            if (!audioContext) setupSingleLineVisualizer();
+        function startVisualizer() {
+            if (!audioContext) setupResponsiveVisualizer();
 
             const wait = setInterval(() => {
                 if (audio.currentTime > 0 && !audio.paused) {
                     clearInterval(wait);
-                    drawSingleLineWaveform();
+                    drawResponsiveWaveform();
                 }
             }, 100);
         }
 
-        function unlockAudioAndStart() {
+        function unlockAudio() {
             audio.muted = false;
             audio.play().catch(() => { });
-            startSingleLineVisualizer();
+            startVisualizer();
         }
 
-        window.addEventListener('click', unlockAudioAndStart, { once: true });
-        window.addEventListener('scroll', unlockAudioAndStart, { once: true });
-        window.addEventListener('keydown', unlockAudioAndStart, { once: true });
+        window.addEventListener('click', unlockAudio, { once: true });
+        window.addEventListener('scroll', unlockAudio, { once: true });
+        window.addEventListener('keydown', unlockAudio, { once: true });
     </script>
+
 </body>
 
 </html>
