@@ -1,3 +1,4 @@
+"""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
@@ -10,4 +11,4 @@ class SignupForm(UserCreationForm):
 
 
 class OTPForm(forms.Form):
-    otp = forms.CharField(max_length=6)
+    otp = forms.CharField(max_length=6)"""

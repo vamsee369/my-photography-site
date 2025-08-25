@@ -37,3 +37,11 @@ def contact_view(request):
         form = ContactForm()
 
     return render(request, 'contact.html', {'form': form})
+
+
+def photo_gallery(request):
+    return render(request, 'photo_gallery.html')
+
+
+def video_gallery(request):
+    return render(request, 'video_gallery.html')

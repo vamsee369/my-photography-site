@@ -1,3 +1,4 @@
+<!--
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -55,20 +56,20 @@
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
         <nav>
-            <!-- <ul class="nav-links">
+             <ul class="nav-links">
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'photography' %}">Photography</a></li>
                 <li><a href="{% url 'travel' %}">Travel</a></li>
                 <li><a href="{% url 'blog' %}">Blog</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
-            </ul>-->
+            </ul>
         </nav>
     </header>
 
     <div class="auth-container">
         <h2>🔐 Login</h2>
         <form method="post">
-            {% csrf_token %} <!-- ✅ Required for all POST forms -->
+            {% csrf_token %}  ✅ Required for all POST forms
             {{ form.non_field_errors }}
 
             <label for="id_username">Username</label>
@@ -113,4 +114,4 @@
     </script>
 </body>
 
-</html>
+</html> -->

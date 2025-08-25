@@ -1,4 +1,4 @@
-from django.urls import reverse
+"""from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -83,4 +83,4 @@ def verify_otp_view(request):
     else:
         form = OTPForm()
 
-    return render(request, 'accounts/verify_otp.html', {'form': form})
+    return render(request, 'accounts/verify_otp.html', {'form': form})"""

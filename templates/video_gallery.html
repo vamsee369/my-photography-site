@@ -5,63 +5,58 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Photography</title>
+    <title>Video Gallery</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
     <style>
-        /* --- Photography Page Custom Styling --- */
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        /* --- Gallery Styling (Same as Photo Gallery) --- */
+        .gallery-container {
             padding: 50px 20px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .gallery-title {
             text-align: center;
-        }
-
-        h2 {
-            font-size: 2.5rem;
             margin-bottom: 40px;
-        }
-
-        .cards {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border-radius: 30px;
-            padding: 45px 65px;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            text-decoration: none;
-            color: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .video-grid video {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .video-grid video:hover {
+            transform: scale(1.12);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            margin-top: 60px;
+            padding: 25px;
+            margin-top: 40px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 
 <body>
-    <!-- 🎵 Background Music -->
+    <!-- Background Music -->
     <audio id="bg-music" src="{% static 'audio/music.mp3' %}" autoplay loop muted></audio>
 
+    <!-- Theme Toggle -->
     <button id="theme-toggle-btn">🌙</button>
 
     <!-- Navbar -->
@@ -77,30 +72,29 @@
             </ul>
         </nav>
     </header>
+    <!-- Page Header -->
     <header>
-        <h1 style="text-align:center; font-size:2.8rem; margin:30px 0;">🏡 Village Photography 🌿</h1>
+        <h1 style="text-align:center; font-size:2.8rem; margin:30px 0;">🎬 Video Gallery</h1>
     </header>
+    <h3><a href="{% url 'photography' %}">⬅️ Go Back</a></h3>
 
-    <!-- Content -->
-    <main>
-        <section class="highlight">
-            <h2>✨ Choose What You Want to Explore ✨</h2>
-            <div class="cards">
-                <a href="{% url 'photo_gallery' %}" class="card">📷 Photos</a>
-                <a href="{% url 'video_gallery' %}" class="card">🎬 Videos</a>
-            </div>
-        </section>
-    </main>
+    <!-- Video Gallery Section -->
+    <div class="gallery-container">
+        <h2 class="gallery-title">My Cinematic Creations 🎥</h2>
 
-    <footer>
-        <p>🌍 Capturing Moments | Telling Stories 📸✨</p>
-    </footer>
+        <div class="video-grid">
+            <video src="{% static 'videos/VILLAGEVIBES.mp4' %}" controls></video>
+            <video src="{% static 'videos/video2.mp4' %}" controls></video>
+            <video src="{% static 'videos/video3.mp4' %}" controls></video>
+            <!-- Add more videos as needed -->
+        </div>
+    </div>
+
 
     <!-- Theme Toggle Script -->
     <script>
         const btn = document.getElementById('theme-toggle-btn');
         const body = document.body;
-
         const lightBg = "url('/static/images/light-bg.jpg')";
         const darkBg = "url('/static/images/dark-bg.png')";
 
@@ -109,13 +103,12 @@
                 body.classList.add('dark-mode');
                 body.style.backgroundImage = darkBg;
                 btn.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
             } else {
                 body.classList.remove('dark-mode');
                 body.style.backgroundImage = lightBg;
                 btn.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
             }
+            localStorage.setItem('theme', theme);
         }
 
         const savedTheme = localStorage.getItem('theme') || 'light';
