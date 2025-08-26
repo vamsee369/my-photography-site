@@ -1,3 +1,8 @@
+from .models import ActiveSession
+from django.utils import timezone
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from datetime import timedelta
 from .forms import ContactForm
 from .models import BlogPost
 from django.shortcuts import render, redirect
@@ -45,3 +50,11 @@ def photo_gallery(request):
 
 def video_gallery(request):
     return render(request, 'video_gallery.html')
+
+
+def active_users_api(request):
+    now = timezone.now()
+    five_minutes_ago = now - timedelta(minutes=5)
+    count = ActiveSession.objects.filter(
+        last_seen__gte=five_minutes_ago).count()
+    return JsonResponse({"active_users": count})

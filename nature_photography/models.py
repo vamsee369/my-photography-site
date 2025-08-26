@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 from django.db import models
 
 
@@ -19,3 +22,11 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.email}"
+
+
+class ActiveSession(models.Model):
+    session_key = models.CharField(max_length=40, unique=True)
+    last_seen = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.session_key

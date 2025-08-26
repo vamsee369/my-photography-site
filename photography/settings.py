@@ -53,6 +53,8 @@ MIDDLEWARE = [
     # 'nature_photography.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "nature_photography.middleware.UpdateLastSeenMiddleware",
+
 
 ]
 

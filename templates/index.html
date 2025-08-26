@@ -106,6 +106,21 @@
             applyTheme(newTheme);
         });
     </script>
+    <div id="active-users">Active Users: 0</div>
+
+    <script>
+        function updateActiveUsers() {
+            fetch("/active-users/")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("active-users").innerText =
+                        "Active Users: " + data.active_users;
+                });
+        }
+        setInterval(updateActiveUsers, 5000); // refresh every 5 sec
+        updateActiveUsers();
+    </script>
+
     <!-- 🎵 Unmute and Play Music on First Interaction (click, scroll, or keypress) -->
     <!--<script>
         const music = document.getElementById('bg-music');
@@ -123,10 +138,9 @@
         window.addEventListener('click', enableMusic, { once: true });
         window.addEventListener('scroll', enableMusic, { once: true });
         window.addEventListener('keydown', enableMusic, { once: true });
-    </script>
+    </script>-->
 
 
 </body>
 
 </html>
--->
