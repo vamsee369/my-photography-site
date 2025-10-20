@@ -82,7 +82,7 @@
             background-color: #00ccbb;
         }
 
-        /* 📱 On small screens: move controls below title and center them */
+
         @media (max-width: 768px) {
             .music-controls {
                 justify-content: center;
@@ -96,7 +96,7 @@
 <body>
     <button id="theme-toggle-btn">🌙</button>
 
-    <!-- Navbar Start -->
+
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
         <nav>
@@ -109,12 +109,12 @@
             </ul>
         </nav>
     </header>
-    <!-- Navbar End -->
+
 
     <header>
         <h1>🚗 My Travel Plans</h1>
 
-        <!-- 🎵 Music Controls (Updated Box Buttons) -->
+
         <div class="music-controls">
             <button id="music-toggle-btn" onclick="toggleMusic()">Play</button>
             <button onclick="playFromStart()">Start Over</button>
@@ -134,7 +134,7 @@
     <div class="travel-container">
         <h2 class="travel-title">Explore My Next Travel Plan</h2>
 
-        <!-- Day 1–10 Entries (unchanged) -->
+
         <div class="day-entry">
             <h3 class="day-title">Day 1 – 🌄 Wheels Roll South – The Journey Begins</h3>
             <p>🚗 Kickstart the adventure from home, loaded with excitement and supplies.</p>
@@ -192,7 +192,7 @@
         <p style="text-align: center; padding: 15px;">🌿 Capturing life, one frame at a time ✨</p>
     </footer>
 
-    <!-- Theme Toggle Script -->
+
     <script>
         const btn = document.getElementById('theme-toggle-btn');
         const body = document.body;
@@ -222,7 +222,6 @@
         });
     </script>
 
-    <!-- Music Script -->
     <script>
         const music = document.getElementById('bg-music');
         const toggleBtn = document.getElementById('music-toggle-btn');

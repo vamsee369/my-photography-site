@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <style>
-        /* --- Gallery Styling --- */
         .gallery-container {
             padding: 50px 20px;
             max-width: 1400px;
@@ -50,7 +49,7 @@
             font-size: 1.1rem;
         }
 
-        /* --- Fullscreen Overlay --- */
+
         .lightbox {
             display: none;
             position: fixed;
@@ -80,7 +79,7 @@
 <body>
     <button id="theme-toggle-btn">🌙</button>
 
-    <!-- Navbar Start -->
+
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
         <nav>
@@ -93,15 +92,15 @@
             </ul>
         </nav>
     </header>
-    <!-- Navbar End -->
 
-    <!-- Page Header -->
+
+
     <header>
         <h1 style="text-align:center; font-size:2.8rem; margin:30px 0;">🎞️ Photo Gallery</h1>
 
     </header>
     <h3><a href="{% url 'photography' %}">🡸 Go Back</a></h3>
-    <!-- Gallery Section -->
+
     <div class="gallery-container">
         <h2 class="gallery-title">My Village Photography Collection 📸</h2>
 
@@ -126,14 +125,14 @@
     </div>
 
 
-    <!-- Fullscreen Lightbox -->
+
     <div class="lightbox" id="lightbox">
         <img src="" alt="Fullscreen Image">
     </div>
 
-    <!-- Scripts -->
+
     <script>
-        // Theme Toggle
+
         const btn = document.getElementById('theme-toggle-btn');
         const body = document.body;
 
@@ -161,7 +160,7 @@
             applyTheme(newTheme);
         });
 
-        // Lightbox (double click on photo)
+
         const images = document.querySelectorAll('.photo-grid img');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = lightbox.querySelector('img');
@@ -173,7 +172,7 @@
             });
         });
 
-        // Close on click anywhere
+
         lightbox.addEventListener('click', () => {
             lightbox.style.display = 'none';
         });

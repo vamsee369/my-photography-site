@@ -40,11 +40,11 @@
 </head>
 
 <body>
-    <!-- 🎵 Background Music -->
+
     <audio id="bg-music" src="{% static 'audio/music.mp3' %}" autoplay loop muted></audio>
     <button id="theme-toggle-btn">🌙</button>
 
-    <!-- Navbar Start -->
+
     <header class="navbar">
         <div class="logo">📸 Vamsee's Photography</div>
         <nav>
@@ -58,7 +58,7 @@
         </nav>
 
     </header>
-    <!-- Navbar End -->
+
 
     <header>
         <h1>📝 My Blog Posts</h1>
@@ -112,7 +112,7 @@
             });
         }
     </script>
-    <!-- 🎵 Unmute and Play Music on First Interaction (click, scroll, or keypress) -->
+
     <script>
         const music = document.getElementById('bg-music');
 
@@ -120,7 +120,7 @@
             music.muted = false;
             music.play().catch(() => { /* ignore autoplay errors */ });
 
-            // Remove listeners after first interaction
+
             window.removeEventListener('click', enableMusic);
             window.removeEventListener('scroll', enableMusic);
             window.removeEventListener('keydown', enableMusic);
