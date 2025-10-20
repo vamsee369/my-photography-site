@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body>
+    <!-- 🎵 Background Music -->
+    <audio id="bg-music" src="{% static 'audio/music.mp3' %}" autoplay loop muted></audio>
+
+    <button id="theme-toggle-btn">🌙</button>
+    <!-- Navbar Start -->
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+
+            </ul>
+        </nav>
+
+    </header>
+    <!-- Navbar End -->
+
+    <header>
+        <h1>📷 Welcome to My World 🌍</h1>
+
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>About Me</h2>
+            <p>---> Hi, I’m Vamsee — a passionate photographer and avid traveler who finds joy in capturing the beauty
+                of
+                everyday moments and distant landscapes. Through my lens, I tell stories that reflect nature, culture,
+                and the emotions of the journey. Whether it's a quiet village scene or a breathtaking mountain view, I
+                love freezing memories that inspire. Join me as I explore the world, one frame at a time. More blog and
+                posts are coming soon!</p>
+            <p>---> 🏠👨‍👩‍👧‍👦🌳Thotada, my peaceful village, rests gracefully on the banks of the River Nagavali,
+                where nature
+                speaks in
+                silence and beauty flows endlessly. The river winds through lush green fields, reflecting the sky and
+                the rhythm of village life. Early mornings here are filled with golden light shimmering on the water,
+                while evenings bring soft breezes and the sound of birds returning home. The landscapes are simple yet
+                stunning — bamboo groves, coconut trees, and narrow muddy paths that lead to hidden gems along the
+                river. Every corner holds a memory, a story, and a perfect frame waiting to be captured. The charm of
+                Thotada and the grace of the Nagavali continue to inspire my journey as a photographer.
+
+            </p>
+        </section>
+
+        <section class="highlight">
+            <h2>Explore</h2>
+            <div class="cards">
+                <a href="photography/" class="card">📸 Village Photography</a>
+                <a href="travel/" class="card">🚗 Next Travel Plans</a>
+                <a href="blog" class="card">📝 Blog</a>
+                <a href="{% url 'contact' %}" class="card">📬Contact</a>
+
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🌍 Capturing Moments | Telling Stories 📸✨</p>
+    </footer>
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // On page load
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        // On button click
+        btn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+    </script>
+    <div id="active-users">Active Users: 0</div>
+
+    <script>
+        function updateActiveUsers() {
+            fetch("/active-users/")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("active-users").innerText =
+                        "Active Users: " + data.active_users;
+                });
+        }
+        setInterval(updateActiveUsers, 5000); // refresh every 5 sec
+        updateActiveUsers();
+    </script>
+
+    <!-- 🎵 Unmute and Play Music on First Interaction (click, scroll, or keypress) -->
+    <!--<script>
+        const music = document.getElementById('bg-music');
+
+        function enableMusic() {
+            music.muted = false;
+            music.play().catch(() => { /* ignore autoplay errors */ });
+
+            // Remove listeners after first interaction
+            window.removeEventListener('click', enableMusic);
+            window.removeEventListener('scroll', enableMusic);
+            window.removeEventListener('keydown', enableMusic);
+        }
+
+        window.addEventListener('click', enableMusic, { once: true });
+        window.addEventListener('scroll', enableMusic, { once: true });
+        window.addEventListener('keydown', enableMusic, { once: true });
+    </script>-->
+
+
+</body>
+
+</html>

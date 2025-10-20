@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Me</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}"> <!---favicon--->
+    <style>
+        .contact-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 60px;
+            background-color: #221f1f4a;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.144);
+            border-radius: 12px;
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .form-input {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ffffff;
+            width: 100%;
+
+        }
+
+        .contact-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #347c90;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .contact-container button:hover {
+            background-color: #19c02c;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 🎵 Background Music -->
+    <audio id="bg-music" src="{% static 'audio/music1.m4a' %}" autoplay loop muted></audio>
+    <button id="theme-toggle-btn">🌙</button>
+
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header>
+        <h1>🙋You Can Contact Me Here</h1>
+    </header>
+    {% if messages %}
+    <div class="success-message">
+        {% for message in messages %}
+        ✅ {{ message }} 🎉
+        {% endfor %}
+    </div>
+    {% endif %}
+    <canvas id="waveform" style="display: block; margin: 20px auto; width: 100%; height: 60px;"></canvas>
+
+    <div class="contact-container">
+        <h2>Contact Me 📬</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+            {{ form.name }}
+            {{ form.email }}
+            {{ form.message }}
+            <button type="submit">Send</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 30px; color: #ffffff;">
+            📸 You can also reach me on Instagram:
+            <a href="https://www.instagram.com/vamseetandra?igsh=ZGJhMzJuc2tmNnlj" target="_blank"
+                style="color: #00fbff; text-decoration: underline;">
+                @vamseetandra
+            </a>
+        </p>
+    </div>
+
+    <footer>
+        <p>🚀Join With Us In The Travel Plans 🤝</p>
+    </footer>
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                if (btn) btn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                if (btn) btn.textContent = '🌙';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        }
+    </script>
+    <!-- 🎵 Unmute and Play Music on First Interaction (click, scroll, or keypress) -->
+    <!--<script>
+        const music = document.getElementById('bg-music');
+
+        function enableMusic() {
+            music.muted = false;
+            music.play().catch(() => { /* ignore autoplay errors */ });
+
+            // Remove listeners after first interaction
+            window.removeEventListener('click', enableMusic);
+            window.removeEventListener('scroll', enableMusic);
+            window.removeEventListener('keydown', enableMusic);
+        }
+
+        window.addEventListener('click', enableMusic, { once: true });
+        window.addEventListener('scroll', enableMusic, { once: true });
+        window.addEventListener('keydown', enableMusic, { once: true });
+    </script>
+    <script>
+        const audio = document.getElementById('bg-music');
+        const canvas = document.getElementById('waveform');
+        const ctx = canvas.getContext('2d');
+
+        let audioContext, analyser, source, dataArray, bufferLength;
+
+        function resizeCanvas() {
+            // Support high-DPI screens
+            const dpr = window.devicePixelRatio || 1;
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Initial setup
+
+        function setupResponsiveVisualizer() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+
+            bufferLength = analyser.fftSize;
+            dataArray = new Uint8Array(bufferLength);
+
+            source = audioContext.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+        }
+
+        function drawResponsiveWaveform() {
+            requestAnimationFrame(drawResponsiveWaveform);
+            analyser.getByteTimeDomainData(dataArray);
+
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(0, 255, 180, 1)';
+            ctx.beginPath();
+
+            const sliceWidth = width / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = height / 2 + (v - 1.0) * (height / 2 - 5);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            ctx.stroke();
+        }
+
+        function startVisualizer() {
+            if (!audioContext) setupResponsiveVisualizer();
+
+            const wait = setInterval(() => {
+                if (audio.currentTime > 0 && !audio.paused) {
+                    clearInterval(wait);
+                    drawResponsiveWaveform();
+                }
+            }, 100);
+        }
+
+        function unlockAudio() {
+            audio.muted = false;
+            audio.play().catch(() => { });
+            startVisualizer();
+        }
+
+        window.addEventListener('click', unlockAudio, { once: true });
+        window.addEventListener('scroll', unlockAudio, { once: true });
+        window.addEventListener('keydown', unlockAudio, { once: true });
+    </script>-->
+
+</body>
+
+</html>

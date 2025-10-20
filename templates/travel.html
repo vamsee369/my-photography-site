@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+
+    <style>
+        .travel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .travel-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .day-entry {
+            margin-bottom: 40px;
+        }
+
+        .day-entry img {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .day-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #00ffe1;
+        }
+
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+
+        .music-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: -40px;
+
+
+
+        }
+
+        .music-controls button {
+            background-color: #00ffe1;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .music-controls button:hover {
+            background-color: #00ccbb;
+        }
+
+        /* 📱 On small screens: move controls below title and center them */
+        @media (max-width: 768px) {
+            .music-controls {
+                justify-content: center;
+                margin-top: 10px;
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button id="theme-toggle-btn">🌙</button>
+
+    <!-- Navbar Start -->
+    <header class="navbar">
+        <div class="logo">📸 Vamsee's Photography</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'photography' %}">Photography</a></li>
+                <li><a href="{% url 'travel' %}">Travel</a></li>
+                <li><a href="{% url 'blog' %}">Blog</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Navbar End -->
+
+    <header>
+        <h1>🚗 My Travel Plans</h1>
+
+        <!-- 🎵 Music Controls (Updated Box Buttons) -->
+        <div class="music-controls">
+            <button id="music-toggle-btn" onclick="toggleMusic()">Play</button>
+            <button onclick="playFromStart()">Start Over</button>
+        </div>
+        <canvas id="bar-visualizer"
+            style="display: block; width: 100%; max-width: 600px; height: 80px; margin: 20px auto;"></canvas>
+
+        <audio id="bg-music" loop>
+            <source src="{% static 'audio/background.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </header>
+
+
+
+
+    <div class="travel-container">
+        <h2 class="travel-title">Explore My Next Travel Plan</h2>
+
+        <!-- Day 1–10 Entries (unchanged) -->
+        <div class="day-entry">
+            <h3 class="day-title">Day 1 – 🌄 Wheels Roll South – The Journey Begins</h3>
+            <p>🚗 Kickstart the adventure from home, loaded with excitement and supplies.</p>
+            <img src="{% static 'images/travel/day1.jpg' %}" alt="Day 1">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 2 – 🌳Forest Trails & Campfire Tales</h3>
+            <p>🏕️ Camp in a scenic forest spot, cook your first outdoor meal, and share stories.</p>
+            <img src="{% static 'images/travel/day2.jpg' %}" alt="Day 2">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 3 – 🌊Coastal Curves & Breeze Drives</h3>
+            <p>🛣️ Drive along coastal roads, soak in ocean views, and stop by hidden beaches.</p>
+            <img src="{% static 'images/travel/day3.jpg' %}" alt="Day 3">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 4 – 🏞️Hills, Hairpins & Hiking Boots</h3>
+            <p>🥾 Explore hilly terrain or nature trails, capturing lush landscapes.</p>
+            <img src="{% static 'images/travel/day4.jpg' %}" alt="Day 4">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 5 – 🛕Temples, Traditions & Twilight Skies</h3>
+            <p>🙏 Visit ancient temples en route and enjoy a peaceful sunset.</p>
+            <img src="{% static 'images/travel/day5.jpg' %}" alt="Day 5">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 6 – 📍Hello Kanyakumari – Touching the Tip</h3>
+            <p>🌅 Arrive at the southernmost point of India — enjoy the majestic sunset view.</p>
+            <img src="{% static 'images/travel/day6.jpg' %}" alt="Day 6">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 7 – 🌅Sunrise Over Three Seas</h3>
+            <p>📸 Witness the magical sunrise at Vivekananda Rock & Thiruvalluvar Statue.</p>
+            <img src="{% static 'images/travel/day7.jpg' %}" alt="Day 7">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 8 – 🌴Chill, Cook & Camp by the Coast</h3>
+            <p>🍲 A relaxed day with self-cooked meals, beach time, and night camping.</p>
+            <img src="{% static 'images/travel/day8.jpg' %}" alt="Day 8">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 9 – 🛤️The Journey Back – Roads & Reflections</h3>
+            <p>🛻 Start your return journey, revisiting memorable moments on the way.</p>
+            <img src="{% static 'images/travel/day9.jpg' %}" alt="Day 9">
+        </div>
+        <div class="day-entry">
+            <h3 class="day-title">Day 10 – 🏡Back to Base – Memories for a Lifetime</h3>
+            <p>📖 After The 3 Places of Day 10, Return home with hearts full of stories and SD cards full of photos.</p>
+            <img src="{% static 'images/travel/day10.jpg' %}" alt="Day 10">
+        </div>
+    </div>
+
+    <footer>
+        <a href="{% url 'travel' %}">Go To Top</a></li>
+        <p style="text-align: center; padding: 15px;">🌿 Capturing life, one frame at a time ✨</p>
+    </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const btn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+
+        const lightBg = "url('/static/images/light-bg.jpg')";
+        const darkBg = "url('/static/images/dark-bg.png')";
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                body.style.backgroundImage = darkBg;
+                btn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                body.style.backgroundImage = lightBg;
+                btn.textContent = '🌙';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        btn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+    </script>
+
+    <!-- Music Script -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const toggleBtn = document.getElementById('music-toggle-btn');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleBtn.innerText = 'Pause';
+            } else {
+                music.pause();
+                toggleBtn.innerText = 'Play';
+            }
+        }
+
+        function playFromStart() {
+            music.currentTime = 0;
+            music.play();
+            toggleBtn.innerText = 'Pause';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleBtn.innerText = 'Play';
+        });
+    </script>
+    <script>
+        const audio = document.getElementById('bg-music');
+        const canvas = document.getElementById('bar-visualizer');
+        const ctx = canvas.getContext('2d');
+
+        let audioContext, analyser, source, dataArray, bufferLength;
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            const width = canvas.clientWidth;
+            const height = canvas.height * 0.7; // reduce visual bar height
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function setupBarsVisualizer() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 128;
+
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+
+            source = audioContext.createMediaElementSource(audio);
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+        }
+
+        function drawBarsVisualizer() {
+            requestAnimationFrame(drawBarsVisualizer);
+            analyser.getByteFrequencyData(dataArray);
+
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const barCount = 30;
+            const barWidth = width / barCount;
+            const gap = 4;
+
+            for (let i = 0; i < barCount; i++) {
+                const value = dataArray[i];
+                const barHeight = (value / 255) * height;
+
+                const x = i * barWidth;
+                const y = height - barHeight;
+
+                const gradient = ctx.createLinearGradient(x, y, x, height);
+                gradient.addColorStop(0, '#00ffe7');
+                gradient.addColorStop(1, '#0085ff');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x + gap / 2, y, barWidth - gap, barHeight);
+                ctx.roundedRect = function (x, y, w, h, r) {
+                    this.beginPath();
+                    this.moveTo(x + r, y);
+                    this.lineTo(x + w - r, y);
+                    this.quadraticCurveTo(x + w, y, x + w, y + r);
+                    this.lineTo(x + w, y + h - r);
+                    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    this.lineTo(x + r, y + h);
+                    this.quadraticCurveTo(x, y + h, x, y + h - r);
+                    this.lineTo(x, y + r);
+                    this.quadraticCurveTo(x, y, x + r, y);
+                    this.closePath();
+                };
+            }
+        }
+
+        function startBarsVisualizer() {
+            if (!audioContext) setupBarsVisualizer();
+
+            const wait = setInterval(() => {
+                if (audio.currentTime > 0 && !audio.paused) {
+                    clearInterval(wait);
+                    drawBarsVisualizer();
+                }
+            }, 100);
+        }
+
+        function enableVisualizerAudio() {
+            audio.muted = false;
+            audio.play().catch(() => { });
+            startBarsVisualizer();
+        }
+
+        window.addEventListener('click', enableVisualizerAudio, { once: true });
+        window.addEventListener('scroll', enableVisualizerAudio, { once: true });
+        window.addEventListener('keydown', enableVisualizerAudio, { once: true });
+    </script>
+
+
+</body>
+
+</html>
